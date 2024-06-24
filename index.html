@@ -1,169 +1,221 @@
-import React, { useState } from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Codesmith - Programming Prodigy</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            background-color: #1a1a1a;
+            color: #00FF00;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: margin-left 0.3s;
+        }
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,255,0,0.3);
+            transition: all 0.3s ease;
+        }
+        .section h2 {
+            margin-top: 0;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        #codeCanvas {
+            width: 100%;
+            height: 200px;
+        }
+        .interactive {
+            cursor: pointer;
+        }
+        .interactive:hover {
+            transform: scale(1.05);
+        }
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #2a2a2a;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+        }
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #00FF00;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #3a3a3a;
+        }
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        .openbtn {
+            font-size: 30px;
+            cursor: pointer;
+            background-color: #2a2a2a;
+            color: #00FF00;
+            padding: 10px 15px;
+            border: none;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 2;
+        }
+        .openbtn:hover {
+            background-color: #3a3a3a;
+        }
+        @media screen and (max-height: 450px) {
+            .sidebar {padding-top: 15px;}
+            .sidebar a {font-size: 18px;}
+        }
+    </style>
+</head>
+<body>
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#about">About</a>
+        <a href="#interests">Interests</a>
+        <a href="#projects">Projects</a>
+        <a href="#future">Future</a>
+        <a href="#contact">Contact</a>
+    </div>
 
-const SimplifiedSlidingLoginSignup = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+    <button class="openbtn" onclick="openNav()">☰</button>
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(isLogin ? 'Logging in' : 'Signing up', { email, password, name });
-  };
-
-  const toggleMode = () => {
-    setIsLogin(!isLogin);
-    setEmail('');
-    setPassword('');
-    setName('');
-  };
-
-  return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      backgroundColor: '#f0f0f0'
-    }}>
-      <div style={{
-        width: '800px',
-        height: '400px',
-        backgroundColor: 'white',
-        borderRadius: '10px',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-        overflow: 'hidden',
-        position: 'relative'
-      }}>
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '200%',
-          height: '100%',
-          display: 'flex',
-          transition: 'transform 0.5s ease-in-out',
-          transform: isLogin ? 'translateX(0)' : 'translateX(-25%)'
-        }}>
-          {/* Login Form */}
-          <div style={{
-            width: '50%',
-            padding: '20px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center'
-          }}>
-            <h2 style={{ marginBottom: '20px' }}>Login</h2>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                style={{ width: '100%', marginBottom: '10px', padding: '5px' }}
-              />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                style={{ width: '100%', marginBottom: '10px', padding: '5px' }}
-              />
-              <button type="submit" style={{
-                width: '100%',
-                padding: '10px',
-                backgroundColor: '#4CAF50',
-                color: 'white',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer'
-              }}>
-                Login
-              </button>
-            </form>
-          </div>
-          
-          {/* Signup Form */}
-          <div style={{
-            width: '50%',
-            padding: '20px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center'
-          }}>
-            <h2 style={{ marginBottom: '20px' }}>Sign Up</h2>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Name"
-                style={{ width: '100%', marginBottom: '10px', padding: '5px' }}
-              />
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                style={{ width: '100%', marginBottom: '10px', padding: '5px' }}
-              />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                style={{ width: '100%', marginBottom: '10px', padding: '5px' }}
-              />
-              <button type="submit" style={{
-                width: '100%',
-                padding: '10px',
-                backgroundColor: '#4CAF50',
-                color: 'white',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer'
-              }}>
-                Sign Up
-              </button>
-            </form>
-          </div>
+    <div class="container">
+        <h1>Alex Codesmith</h1>
+        <div id="codeCanvas"></div>
+        
+        <div id="about" class="section interactive">
+            <h2>About Me</h2>
+            <p>I'm Alex, a 24-year-old programming prodigy with a passion for pushing the boundaries of code. My journey began at age 10 when I wrote my first "Hello, World!" program, and I've been obsessed with the art and science of programming ever since.</p>
+            <p>Favorite Color: #00FF00 (Neon Green) - It's the color of my dreams and my code editor!</p>
         </div>
         
-        {/* Toggle Overlay */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          width: '50%',
-          height: '100%',
-          backgroundColor: '#2196F3',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: 'white',
-          transition: 'transform 0.5s ease-in-out',
-          transform: isLogin ? 'translateX(100%)' : 'translateX(0)'
-        }}>
-          <h3>{isLogin ? 'New Here?' : 'Welcome Back!'}</h3>
-          <p style={{ margin: '20px 0', textAlign: 'center', padding: '0 20px' }}>
-            {isLogin 
-              ? "Sign up and discover a great amount of new opportunities!" 
-              : "To keep connected with us please login with your personal info"}
-          </p>
-          <button onClick={toggleMode} style={{
-            padding: '10px 20px',
-            border: '2px solid white',
-            borderRadius: '20px',
-            backgroundColor: 'transparent',
-            color: 'white',
-            cursor: 'pointer'
-          }}>
-            {isLogin ? 'Sign Up' : 'Login'}
-          </button>
+        <div id="interests" class="section interactive">
+            <h2>Interests & Hobbies</h2>
+            <ul>
+                <li>🏆 Competitive coding challenges: I thrive on the adrenaline rush of solving complex problems under time pressure. LeetCode and HackerRank are my digital gyms.</li>
+                <li>🎮 Developing indie games: I believe games are the perfect fusion of art and technology. Currently working on a procedurally generated roguelike!</li>
+                <li>🧠 Exploring cutting-edge AI and ML algorithms: Fascinated by the potential of AI to revolutionize how we interact with technology.</li>
+                <li>🍜 Trying out new ramen shops: When I'm not coding, I'm slurping. My goal is to try every ramen shop in the city!</li>
+            </ul>
         </div>
-      </div>
+        
+        <div id="projects" class="section interactive">
+            <h2>Notable Projects</h2>
+            <ul>
+                <li>💻 CodeCraft: An AI-powered code completion tool that learns from your coding style.</li>
+                <li>🌐 QuantumNet: A simulation of quantum internet protocols, exploring the future of secure communication.</li>
+                <li>🤖 EmojiAI: An emoji-based programming language, because why not? 😎</li>
+            </ul>
+        </div>
+        
+        <div id="future" class="section interactive">
+            <h2>Future Aspirations</h2>
+            <p>Dream Destination: Tokyo, Japan - Where technology meets tradition. I'm fascinated by Japan's technological advancements and how they seamlessly blend with their rich cultural heritage.</p>
+            <p>Future Skill: Quantum computing programming - It's the next frontier! I believe quantum computing will revolutionize fields like cryptography, drug discovery, and financial modeling.</p>
+        </div>
+        
+        <div class="section interactive">
+            <h2>Motto</h2>
+            <p>"Code is poetry written for machines to execute and humans to ponder." I believe that elegant code can be as beautiful and impactful as any work of art.</p>
+        </div>
+        
+        <div id="contact" class="section interactive">
+            <h2>Get in Touch</h2>
+            <p>Want to collaborate on a project or just chat about the latest tech trends? Reach out!</p>
+            <p>Email: alex@codesmith.dev</p>
+            <p>GitHub: @AlexCodesmith</p>
+            <p>Twitter: @CodesmithAlex</p>
+        </div>
     </div>
-  );
-};
 
-export default SimplifiedSlidingLoginSignup;
+    <script>
+        function setup() {
+            let canvas = createCanvas(windowWidth, 200);
+            canvas.parent('codeCanvas');
+        }
+
+        function draw() {
+            background(26);
+            stroke(0, 255, 0);
+            strokeWeight(2);
+            for (let i = 0; i < width; i += 20) {
+                let h = noise(frameCount * 0.01 + i * 0.01) * height;
+                line(i, height, i, height - h);
+            }
+        }
+
+        function windowResized() {
+            resizeCanvas(windowWidth, 200);
+        }
+
+        function getContrastColor(hexcolor) {
+            hexcolor = hexcolor.replace("#", "");
+            var r = parseInt(hexcolor.substr(0,2),16);
+            var g = parseInt(hexcolor.substr(2,2),16);
+            var b = parseInt(hexcolor.substr(4,2),16);
+            var yiq = ((r*299)+(g*587)+(b*114))/1000;
+            return (yiq >= 128) ? 'black' : 'white';
+        }
+
+        document.querySelectorAll('.interactive').forEach(el => {
+            el.addEventListener('click', () => {
+                let newColor = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+                el.style.backgroundColor = newColor;
+                el.style.color = getContrastColor(newColor);
+            });
+        });
+
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+            document.getElementsByClassName("container")[0].style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementsByClassName("container")[0].style.marginLeft = "0";
+        }
+
+        // Close sidebar when clicking a link
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('click', closeNav);
+        });
+    </script>
+</body>
+</html>
